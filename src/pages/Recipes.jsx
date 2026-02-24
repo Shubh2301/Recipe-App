@@ -5,7 +5,7 @@ import RecipeCard from '../components/RecipeCard';
 const Recipes = () => {
   const[recipe]=useContext(recipecontext);
 
-  const renderrecipes=recipe.map((data)=>{
+  const renderrecipes=recipe.map(data=>{
     return( 
        <RecipeCard key={data.id} data={data} />
     )
