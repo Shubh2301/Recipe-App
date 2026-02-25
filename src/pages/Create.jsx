@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid';
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { recipecontext } from '../context/RecipeContext';
 import { toast } from 'react-toastify';
@@ -17,10 +17,16 @@ const Create = () => {
         const copydata = [...recipe]
         copydata.push(data);
         Setrecipe(copydata);
+        localStorage.setItem("recipes",JSON.stringify(copydata))
         toast.success("Recipe added!")
         reset()
         navigate("/recipes")
     }
+
+    useEffect(()=>{
+     Setrecipe(JSON.parse(localStorage.getItem("recipes")) || [])  
+
+    },[])
 
     return (
         <div>
@@ -33,7 +39,7 @@ const Create = () => {
                 <input type="text" className='block border-b outline-0  p-2' placeholder='Chef name' {...register("chef")} />
 
 
-                <textarea name="" className='block border-b outline-0  p-2' placeholder='enter description' {...register("desc")} > </textarea>
+                <textarea name="" className='block border-b outline-0  p-2' placeholder='enter description' {...register("desc")} /> 
 
 
                 <textarea name="" className='block border-b outline-0  p-2' placeholder='ingredients' {...register("ingr")} ></textarea>

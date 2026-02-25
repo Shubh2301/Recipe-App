@@ -83,19 +83,28 @@ const SingleRecipe = () => {
 
     const recipe = data.find((r) => params.id == r.id);
 
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit } = useForm({
+        title:data?.title,
+        chef:data?.chef,
+        image:data?.image,
+        ins:data?.ins,
+        desc:data?.desc,
+        ingr:data?.ingr
+    });
 
-    const SubmitHandler = (updatedRecipe) => {
+    const UpdateHandler = (updatedRecipe) => {
         const index = data.findIndex((r) => params.id == r.id);
         const copydata = [...data];
         copydata[index] = { ...copydata[index], ...updatedRecipe };
         Setrecipe(copydata);
+         localStorage.setItem("recipes",JSON.stringify(copydata))
         toast.success("Recipe updated!");
     }
 
     const handleDelete = () => {
         const filterdata = data.filter((r) => params.id != r.id);
         Setrecipe(filterdata);
+         localStorage.setItem("recipes",JSON.stringify(filterdata))
         toast.success("Recipe deleted!");
         navigate("/recipes");
     }
@@ -115,7 +124,7 @@ const SingleRecipe = () => {
                 <img className='h-[20vh]' src={recipe.image} alt="" />
             </div>
 
-            <form className='1/2 p-2' onSubmit={handleSubmit(SubmitHandler)}>
+            <form className='1/2 p-2' onSubmit={handleSubmit(UpdateHandler)}>
                 <input
                     type="url"
                     className='block border-b outline-0 p-2'
